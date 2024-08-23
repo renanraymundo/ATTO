@@ -327,5 +327,43 @@ Version:	1.1
 		$('.preloader').addClass('preloader-deactivate');
 	});
 	
-	
+	/*====================
+		Anchor JS
+	======================*/
+	$('a[href^="#"]').on('click', function(event) {
+		event.preventDefault();
+
+		// Remove 'active' class de todos os links
+		$('a[href^="#"]').parent().removeClass('active');
+
+		// Adiciona 'active' class ao link clicado
+		$(this).parent().addClass('active');
+
+		// Rola suavemente para a seção alvo
+		var target = $($(this).attr('href'));
+		$('html, body').animate({
+				scrollTop: target.offset().top
+		}, 1000); // 1000ms para a animação
+});
+
+
+$(window).on('scroll', function() {
+		var scrollPosition = $(window).scrollTop();
+		
+		$('section').each(function() {
+				var sectionOffset = $(this).offset().top;
+				var sectionHeight = $(this).height();
+
+				
+				if (scrollPosition >= sectionOffset - 50 && scrollPosition < sectionOffset + sectionHeight) {
+						var id = $(this).attr('id');
+						$('a[href="#' + id + '"]').parent().addClass('active');
+				} else {
+						var id = $(this).attr('id');
+						$('a[href="#' + id + '"]').parent().removeClass('active');
+				}
+		});
+});
+
+
 })(jQuery);
